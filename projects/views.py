@@ -31,11 +31,13 @@ def createProject(request):
     return render(request, "projects/project_form.html", contex)
 
 
-def updateProject(request):
-    form = ProjectForm()
+def updateProject(request, pk):
+    project = Project.objects.get(id=pk)
+    # instance - to specify what column we will modify
+    form = ProjectForm(instance=project)
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, instance=project)
         # is_valid Django method to check if the submition was valid
         if form.is_valid():
             # save Django method to save info and add it to db
