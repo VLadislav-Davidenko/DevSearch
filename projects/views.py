@@ -19,7 +19,7 @@ def createProject(request):
     form = ProjectForm()
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, request.FILES)
         # is_valid Django method to check if the submition was valid
         if form.is_valid():
             # save Django method to save info and add it to db
@@ -37,7 +37,7 @@ def updateProject(request, pk):
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         # is_valid Django method to check if the submition was valid
         if form.is_valid():
             # save Django method to save info and add it to db

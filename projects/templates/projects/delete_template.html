@@ -3,6 +3,7 @@
 {% block content %}
 
 <form action="", method="POST">
+    <!-- csrf_token - we use it for security to avoid csrf attack in form-->
     {% csrf_token %}
     <p>Are you sure, you want to delete "{{object}}"?</p>
     <a href="{% url 'projects' %}">Go back</a>
