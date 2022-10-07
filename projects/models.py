@@ -3,6 +3,9 @@ from pydoc import describe
 import uuid
 from django.db import models
 
+# python3 manage.py makemigrations
+# python3 manage.py migrate
+
 # Create your models here.
 class Project(models.Model):
     title = models.CharField(max_length=200)
