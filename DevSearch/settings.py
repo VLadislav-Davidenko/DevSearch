@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_za*lc@why^4uj#!&1@yf&7$y6!a+3k5-q(i6+1pff&tk!pz^#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -44,6 +44,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -131,6 +134,9 @@ STATICFILES_DIRS = [
 
 # This field decides where to store all images that users upload
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+# Here our static and prodaction will be 
+# python3 manage.py collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
