@@ -2,12 +2,14 @@ from email.policy import default
 from pydoc import describe
 import uuid
 from django.db import models
+from users.models import Profile
 
 # python3 manage.py makemigrations
 # python3 manage.py migrate
 
 # Create your models here.
 class Project(models.Model):
+    owner = models.ForeignKey(Profile, null = True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=200)
     # null - we allowed to create a row in db and do not need to set it
     # blank - we allowed to submit this part empty to db
