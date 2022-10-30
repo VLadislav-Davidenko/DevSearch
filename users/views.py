@@ -11,6 +11,7 @@ from .models import Profile
 
 def loginUser(request):
     page = 'login'
+
     if request.user.is_authenticated:
         return redirect('profiles')
 
@@ -20,22 +21,24 @@ def loginUser(request):
 
         try:
             user = User.objects.get(username=username)
-        except:
-            messages.error(request, "Username does not exist")
+        except: 
+            #messages.error(request, 'Username does not exist')
+            pass
 
+        
         user = authenticate(request, username=username, password=password)
-
+            
         if user is not None:
             login(request, user)
             return redirect('profiles')
         else:
-            messages.error(request, "Username or Password is incorrect")
+            messages.error(request, 'Username or password is incorrect')
 
     return render(request, 'users/login_register.html')
 
 def logoutUser(request):
     logout(request)
-    messages.warning(request, "User was succesfully logout")
+    messages.info(request, 'User was logged out')
     return redirect('login')
 
 def registerUser(request):
