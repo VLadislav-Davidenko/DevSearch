@@ -17,14 +17,17 @@ def project(request, pk):
 
 @login_required(login_url='login')
 def createProject(request):
+    profile = request.user.profile
     form = ProjectForm()
 
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
         # is_valid Django method to check if the submition was valid
         if form.is_valid():
-            # save Django method to save info and add it to db
-            form.save()
+            # it gives us the instance of current project
+            project = form.save(commit=False)
+            project.owner = profile
+            project.save()
             return redirect('projects')
 
 
@@ -33,7 +36,8 @@ def createProject(request):
 
 @login_required(login_url='login')
 def updateProject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project = profile.project_set.get(id=pk)
     # instance - to specify what column we will modify
     form = ProjectForm(instance=project)
 
@@ -51,7 +55,9 @@ def updateProject(request, pk):
 
 @login_required(login_url='login')
 def deleteProject(request, pk):
-    project = Project.objects.get(id=pk)
+    # We take info from authorised user
+    profile = request.user.profile
+    project = profile.project_set.get(id=pk)
     if request.method == 'POST':
         project.delete()
         return redirect('projects')
