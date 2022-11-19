@@ -14,9 +14,14 @@ img {
   width: 100%;
 }
 
-.tag > i.im {
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
+.tag > i.fa {
+  font-size: 1.5em;
+  margin-right: 0.5em;
+}
+
+i.fa {
+  font-size: 1.7em;
+  margin-right: 0.5em;
 }
 
 .content-box {
