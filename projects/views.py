@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Project
 from .forms import ProjectForm
+from django.contrib import messages
 
 
 def projects(request):
@@ -28,7 +29,8 @@ def createProject(request):
             project = form.save(commit=False)
             project.owner = profile
             project.save()
-            return redirect('projects')
+            messages.success(request, "Project was added successfully")
+            return redirect('account')
 
 
     contex = {'form': form}
@@ -47,7 +49,8 @@ def updateProject(request, pk):
         if form.is_valid():
             # save Django method to save info and add it to db
             form.save()
-            return redirect('projects')
+            messages.success(request, "Project was updated successfully")
+            return redirect('account')
 
 
     contex = {'form': form}
@@ -60,6 +63,7 @@ def deleteProject(request, pk):
     project = profile.project_set.get(id=pk)
     if request.method == 'POST':
         project.delete()
-        return redirect('projects')
+        messages.success(request, "Project was deleted successfully")
+        return redirect('account')
     contex = {'object': project}
-    return render(request, 'projects/delete_template.html', contex)
+    return render(request, 'delete_template.html', contex)
