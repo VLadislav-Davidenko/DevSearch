@@ -2,14 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Project
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 from django.contrib import messages
 from .utils import searchProjects, paginateProjects
 
 
 def projects(request):
     projects, search_query = searchProjects(request)
-    custom_range, projects = paginateProjects(request, projects, 2)
+    custom_range, projects = paginateProjects(request, projects, 6)
 
     context = {'projects':projects, 'search_query':search_query, 'custome_range': custom_range}
     return render(request, "projects/projects.html", context)
@@ -17,7 +17,23 @@ def projects(request):
 
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
-    return render(request, "projects/single-project.html", {'project': projectObj})
+    form = ReviewForm()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.project = projectObj
+            review.owner = request.user.profile
+            review.save()
+
+            projectObj.getVoteCount
+
+            messages.success(request, "Your review was submited")
+
+            return redirect('single-project', pk=projectObj.id)
+
+    return render(request, "projects/single-project.html", {'project': projectObj, 'form': form})
 
 @login_required(login_url='login')
 def createProject(request):
@@ -25,7 +41,7 @@ def createProject(request):
     form = ProjectForm()
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST, request.FILES)
+        form = ProjectForm(request.POST)
         # is_valid Django method to check if the submition was valid
         if form.is_valid():
             # it gives us the instance of current project
