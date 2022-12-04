@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="messagePage my-xl">
+  <div class="content-box">
+    <div class="message">
+      <a class="backButton" href="{% url 'inbox' %}"><i class="fa fa-angle-left" style="margin-left: 0.55em;"></i></a>
+      <h2 class="message__subject">{{singleMessage.subject}}</h4>
+        <a href="profile.html" class="message__author">{{singleMessage.name}}</a>
+        <p class="message__date">{{singleMessage.created}}</p>
+        <div class="message__body">{{singleMessage.body|linebreaksbr}}</div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

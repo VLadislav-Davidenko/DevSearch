@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from .models import Profile
+from .models import Profile, Message
 from .utils import searchProfiles, paginateProfiles
 
 def loginUser(request):
@@ -139,6 +139,7 @@ def updateSkill(request, pk):
     context = {'form': form}
     return render(request, 'users/skill_form.html', context)
 
+
 @login_required(login_url='login')
 def deleteSkill(request, pk):
     # We take info from authorised user
@@ -150,3 +151,25 @@ def deleteSkill(request, pk):
         return redirect('account')
     contex = {'object': skill}
     return render(request, 'delete_template.html', contex)
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    context = {'messageRequest': messageRequest, 'unreadCount':unreadCount}
+    return render(request, 'users/inbox.html', context)
+
+
+@login_required(login_url='login')
+def viewMessage(request, pk):
+    profile = request.user.profile
+    singleMessage = profile.messages.get(id=pk)
+
+    if singleMessage.is_read == False:
+        singleMessage.is_read = True
+        singleMessage.save()
+
+    context = {'singleMessage': singleMessage}
+    return render(request, 'users/message.html', context)
