@@ -1,5 +1,6 @@
 from email.policy import default
 from pydoc import describe
+import datetime
 import uuid
 from django.db import models
 from users.models import Profile
@@ -9,7 +10,7 @@ from users.models import Profile
 
 # Create your models here.
 class Project(models.Model):
-    owner = models.ForeignKey(Profile, null = True, blank=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(Profile, null = True, blank=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     # null - we allowed to create a row in db and do not need to set it
     # blank - we allowed to submit this part empty to db
@@ -33,6 +34,14 @@ class Project(models.Model):
     
     class Meta:
         ordering=['-vote_ratio', '-vote_total', 'title']
+
+    @property
+    def imageUrl(self):
+        try:
+            url = self.featured_image.url
+        except:
+            url = ''
+        return url
 
     @property
     def reviewers(self):

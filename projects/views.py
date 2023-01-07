@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Project
+from .models import Project, Tag
 from .forms import ProjectForm, ReviewForm
 from django.contrib import messages
 from .utils import searchProjects, paginateProjects
@@ -41,6 +41,7 @@ def createProject(request):
     form = ProjectForm()
 
     if request.method == 'POST':
+        newtags = request.POST.get('newtags').replace(","," ").split()
         form = ProjectForm(request.POST)
         # is_valid Django method to check if the submition was valid
         if form.is_valid():
@@ -48,6 +49,9 @@ def createProject(request):
             project = form.save(commit=False)
             project.owner = profile
             project.save()
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
             messages.success(request, "Project was added successfully")
             return redirect('account')
 
@@ -63,11 +67,15 @@ def updateProject(request, pk):
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
+        newtags = request.POST.get('newtags').replace(","," ").split()
         form = ProjectForm(request.POST, request.FILES, instance=project)
         # is_valid Django method to check if the submition was valid
         if form.is_valid():
             # save Django method to save info and add it to db
-            form.save()
+            project = form.save()
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
             messages.success(request, "Project was updated successfully")
             return redirect('account')
 
