@@ -436,6 +436,7 @@ i.fa {
   font-weight: 500;
   transition: all 0.3s ease-in-out;
   border-bottom: 2px solid transparent;
+  padding: 5px;
 }
 
 .singleProject__liveLink:hover {

@@ -13,13 +13,13 @@
             </span>
             {% endfor %}
           </div>
-          {% if projecy.source_link %}
-          <a class="singleProject__liveLink" href="#" target="_blank"><i class="im im-external-link"></i>Source Code
+          {% if project.source_link %}
+          <a class="singleProject__liveLink" href="{{project.source_link}}" target="_blank"><i class="fa fa-external-link"></i>Source Code
           </a>
           {% endif %}
 
-          {% if projecy.demo_link %}
-          <a class="singleProject__liveLink" href="#" target="_blank"><i class="im im-external-link"></i>Demo Link
+          {% if project.demo_link %}
+          <a class="singleProject__liveLink" href="{{project.demo_link}}" target="_blank"><i class="fa fa-external-link"></i>Demo Link
           </a>
           {% endif %}
         </div>

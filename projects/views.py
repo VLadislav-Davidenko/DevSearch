@@ -80,7 +80,7 @@ def updateProject(request, pk):
             return redirect('account')
 
 
-    contex = {'form': form}
+    contex = {'form': form, 'project': project}
     return render(request, "projects/project_form.html", contex)
 
 @login_required(login_url='login')
