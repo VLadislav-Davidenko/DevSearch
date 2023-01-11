@@ -133,7 +133,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'devsearch',
         'USER': 'visl',
-        'PASSWORD': 'Adik6751',
+        'PASSWORD': '',
         'HOST': 'devsearch.cdndrzf6vxdb.us-east-1.rds.amazonaws.com',
         'PORT': '5432'
     }
