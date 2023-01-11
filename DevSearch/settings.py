@@ -77,6 +77,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     "corsheaders",
+
+    "storages",
 ]
 
 REST_FRAMEWORK = {
@@ -207,3 +209,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
+
+AWS_S3_ACCESS_KEY_ID = 'AKIARKYETN2IUX3WUQGH'
+AWS_S3_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'devsearch-visl-bucket'
