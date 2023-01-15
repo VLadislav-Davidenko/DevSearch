@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
+
+# Loading DotEnv to get password
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -133,7 +137,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'devsearch',
         'USER': 'visl',
-        'PASSWORD': '',
+        'PASSWORD': os.getenv("DB_PASSWORD"),
         'HOST': 'devsearch.cdndrzf6vxdb.us-east-1.rds.amazonaws.com',
         'PORT': '5432'
     }
@@ -216,6 +220,6 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 
-AWS_S3_ACCESS_KEY_ID = 'AKIARKYETN2IUX3WUQGH'
-AWS_S3_SECRET_ACCESS_KEY = ''
+AWS_S3_ACCESS_KEY_ID = os.getenv("AKIARKYETN2I6RXMK4PI")
+AWS_S3_SECRET_ACCESS_KEY = os.getenv("AWS_S3_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = 'devsearch-visl-bucket'
